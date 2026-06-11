@@ -4,13 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Northform Studio — Interior Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --paper: #F4F1EA;
@@ -18,155 +14,119 @@
       --ink: #1A1814;
       --ink-soft: #6B6358;
       --navy: #2A3A4F;
+      --gold: #C9A96E;
       --line: #D8D2C6;
-      --spacing-xs: 0.5rem;
-      --spacing-sm: 1rem;
-      --spacing-md: 1.5rem;
-      --spacing-lg: 2rem;
-      --spacing-xl: 3rem;
-      --spacing-2xl: 4rem;
-      --spacing-3xl: 6rem;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: Manrope, sans-serif;
       background: var(--paper);
       color: var(--ink);
       line-height: 1.7;
-      font-size: 1rem;
-      font-weight: 400;
+      overflow-x: hidden;
     }
 
-    h1, h2, h3, h4 {
+    h1, h2, h3 {
       font-family: Fraunces, serif;
       font-weight: 300;
       letter-spacing: -0.03em;
     }
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-      margin-bottom: var(--spacing-md);
-    }
+    p { color: var(--ink-soft); line-height: 1.75; }
 
-    h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: var(--spacing-md);
-    }
+    a { color: inherit; text-decoration: none; }
 
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    p {
-      color: var(--ink-soft);
-      margin-bottom: var(--spacing-md);
-      line-height: 1.7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.3s;
-      position: relative;
-    }
-
-    a:hover {
-      color: var(--navy);
-    }
-
-    .section-index {
-      font-family: Fraunces, serif;
-      font-size: 3.5rem;
-      font-weight: 300;
-      color: var(--navy);
-      margin-bottom: var(--spacing-lg);
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
+    /* ── HEADER ── */
     header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
-      background: var(--paper);
-      border-bottom: 1px solid var(--line);
-      padding: var(--spacing-md) var(--spacing-lg);
+      padding: 1.25rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: background 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+
+    header.scrolled {
+      background: rgba(244, 241, 234, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-color: var(--line);
     }
 
     .logo {
-      height: 2.5rem;
+      height: 2.25rem;
       width: auto;
+      mix-blend-mode: multiply;
     }
+
+    header.scrolled .logo { mix-blend-mode: normal; }
 
     .header-nav {
       display: flex;
-      gap: var(--spacing-lg);
+      gap: 2rem;
       align-items: center;
     }
 
-    .dropdown {
-      position: relative;
-    }
+    .dropdown { position: relative; }
 
     .dropdown-btn {
       background: none;
       border: none;
       font-family: Manrope, sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
       font-weight: 500;
-      color: var(--ink);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--paper);
       cursor: pointer;
-      padding: var(--spacing-xs) 0;
       display: flex;
       align-items: center;
-      gap: var(--spacing-xs);
-      transition: color 0.3s;
+      gap: 0.375rem;
+      transition: color 0.3s, opacity 0.3s;
+      opacity: 0.85;
     }
 
-    .dropdown-btn:hover {
-      color: var(--navy);
-    }
+    header.scrolled .dropdown-btn { color: var(--ink); }
+
+    .dropdown-btn:hover { opacity: 1; }
 
     .dropdown-btn::after {
-      content: '▾';
-      font-size: 0.7rem;
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
       transition: transform 0.3s;
     }
 
-    .dropdown-btn[aria-expanded="true"]::after {
-      transform: rotate(180deg);
-    }
+    .dropdown-btn[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-2px); }
 
     .dropdown-menu {
       position: absolute;
-      top: 100%;
+      top: calc(100% + 0.75rem);
       right: 0;
       background: var(--paper);
       border: 1px solid var(--line);
-      border-top: none;
       min-width: 200px;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-10px);
-      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      transform: translateY(-8px);
+      transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
       z-index: 1001;
+      box-shadow: 0 8px 32px rgba(42, 58, 79, 0.1), 0 2px 8px rgba(42, 58, 79, 0.06);
     }
 
     .dropdown-menu[aria-hidden="false"] {
@@ -178,528 +138,589 @@
     .dropdown-menu a, .dropdown-menu button {
       display: block;
       width: 100%;
-      padding: var(--spacing-sm) var(--spacing-lg);
-      text-align: left;
-      border: none;
-      background: none;
+      padding: 0.75rem 1.25rem;
       font-family: Manrope, sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
+      font-weight: 400;
       color: var(--ink);
       cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
+      background: none;
+      border: none;
+      text-align: left;
+      transition: background 0.2s, color 0.2s;
     }
 
     .dropdown-menu a:hover, .dropdown-menu button:hover {
-      background-color: var(--paper-2);
+      background: var(--paper-2);
       color: var(--navy);
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-3xl);
-      align-items: center;
-      padding: var(--spacing-3xl) var(--spacing-lg);
-      min-height: 70vh;
-    }
-
-    .hero-content h1 {
-      margin-bottom: var(--spacing-lg);
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-values {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      margin-bottom: var(--spacing-lg);
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-values span {
-      display: inline-block;
-    }
-
-    .hero-values span:not(:last-child)::after {
-      content: '|';
-      margin-left: var(--spacing-sm);
-      color: var(--line);
-    }
-
-    .hero-tagline {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      margin-bottom: var(--spacing-md);
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-desc {
-      font-size: 1rem;
-      color: var(--ink-soft);
-      max-width: 90%;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-image {
+    /* ── HERO ── */
+    #start {
       position: relative;
-      height: 100%;
-      min-height: 500px;
+      height: 100svh;
+      min-height: 600px;
       overflow: hidden;
-      border-radius: 0;
+      background: var(--ink);
     }
 
-    .hero-image img {
+    .hero-bg {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1.05);
+      transform: scale(1.06);
+      transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .placeholder {
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(26, 24, 20, 0.55) 0%,
+        rgba(26, 24, 20, 0.2) 50%,
+        rgba(26, 24, 20, 0.7) 100%
+      );
+    }
+
+    ._hero-content-old {}
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .hero-wordmark {
+      font-family: Fraunces, serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 3.5vw, 2.75rem);
+      letter-spacing: 0.12em;
+      color: var(--paper);
+      opacity: 0;
+      transform: translateY(20px);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      white-space: nowrap;
+    }
+
+    .hero-wordmark-divider {
+      display: block;
+      width: 1px;
+      height: 1.4em;
+      background: rgba(244, 241, 234, 0.35);
+      flex-shrink: 0;
+    }
+
+    .hero-wordmark-sub {
+      font-style: italic;
+      font-weight: 200;
+      font-size: 0.85em;
+      color: rgba(244, 241, 234, 0.65);
+      letter-spacing: 0.08em;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(244, 241, 234, 0.45);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: rgba(244, 241, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: var(--paper-2);
-      border: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      text-align: center;
-      padding: var(--spacing-lg);
+      background: var(--gold);
+      animation: scrollLine 1.8s ease-in-out infinite;
     }
 
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ── SOCIAL PROOF BAR ── */
     .social-proof {
-      background: var(--paper-2);
-      padding: var(--spacing-lg) var(--spacing-lg);
-      font-size: 0.9rem;
-      color: var(--ink-soft);
+      background: var(--navy);
+      padding: 1rem 5vw;
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-lg);
+      gap: 0;
       justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
+      align-items: stretch;
     }
 
     .social-proof-item {
+      font-family: Manrope, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(244, 241, 234, 0.6);
+      padding: 0.5rem 2rem;
       display: flex;
       align-items: center;
-      gap: var(--spacing-sm);
     }
 
-    .social-proof-item:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      margin-left: var(--spacing-lg);
-      color: var(--line);
+    .social-proof-item:not(:last-child) {
+      border-right: 1px solid rgba(244, 241, 234, 0.15);
     }
 
-    section {
-      padding: var(--spacing-3xl) var(--spacing-lg);
+    .social-proof-item a {
+      color: var(--gold);
+      transition: opacity 0.2s;
     }
 
-    section:nth-child(odd) {
-      background: var(--paper);
+    .social-proof-item a:hover { opacity: 0.7; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 5vw; }
+
+    #start { padding: 0; }
+
+    section:nth-child(even) { background: var(--paper-2); }
+
+    .section-label {
+      font-family: Manrope, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(12px);
     }
 
-    section:nth-child(even) {
-      background: var(--paper-2);
-    }
-
-    #start {
-      background: var(--paper);
-      padding: 0;
-    }
-
-    .section-header {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: var(--spacing-3xl);
-      margin-bottom: var(--spacing-3xl);
+    .section-index {
+      font-family: Fraunces, serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 200;
+      color: var(--navy);
+      opacity: 0.08;
+      line-height: 1;
+      margin-bottom: -1rem;
+      transform: translateY(0);
     }
 
     .section-title {
       font-family: Fraunces, serif;
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 4vw, 3.25rem);
       font-weight: 300;
+      letter-spacing: -0.03em;
       color: var(--ink);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(16px);
     }
 
-    .about-content {
-      display: flex;
-      gap: var(--spacing-3xl);
+    /* ── ABOUT ── */
+    #onas .inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1200px;
     }
 
-    .about-text {
-      flex: 1;
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      transform: translateY(16px);
     }
 
     .about-image {
-      flex: 0 0 300px;
-      height: 400px;
+      position: relative;
+      height: 520px;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
     }
 
     .about-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.6s;
     }
+
+    .about-image:hover img { transform: scale(1.03); }
+
+    .about-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42, 58, 79, 0.35) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── GALLERY ── */
+    #realizacje { background: var(--ink); }
+
+    #realizacje .section-label { color: var(--gold); }
+    #realizacje .section-title { color: var(--paper); }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--spacing-lg);
-      margin-bottom: var(--spacing-lg);
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(3, 240px);
+      gap: 0.5rem;
     }
 
     .gallery-item {
       position: relative;
       overflow: hidden;
       cursor: pointer;
-      aspect-ratio: 1;
-      background: var(--paper);
+      background: rgba(255,255,255,0.04);
     }
 
-    .gallery-item:nth-child(1) {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    .gallery-item:nth-child(3) {
-      grid-row: span 2;
-    }
-
-    .gallery-item:nth-child(6) {
-      grid-column: span 2;
-    }
-
-    .gallery-item:nth-child(9) {
-      grid-column: span 2;
-    }
+    .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+    .gallery-item:nth-child(2) { grid-column: span 4; grid-row: span 1; }
+    .gallery-item:nth-child(3) { grid-column: span 3; grid-row: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 4; grid-row: span 1; }
+    .gallery-item:nth-child(5) { grid-column: span 3; grid-row: span 1; }
+    .gallery-item:nth-child(6) { grid-column: span 3; grid-row: span 1; }
+    .gallery-item:nth-child(7) { grid-column: span 3; grid-row: span 1; }
+    .gallery-item:nth-child(8) { grid-column: span 3; grid-row: span 1; }
+    .gallery-item:nth-child(9) { grid-column: span 3; grid-row: span 1; }
 
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+      filter: brightness(0.88) saturate(0.9);
     }
 
     .gallery-item:hover img {
-      transform: scale(1.05);
+      transform: scale(1.06);
+      filter: brightness(1) saturate(1);
     }
 
-    .testimonials {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-2xl);
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,24,20,0.6) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
     }
+
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { max-width: 780px; }
 
     .testimonial {
-      padding: var(--spacing-2xl) 0;
+      padding: 2.5rem 0;
       border-bottom: 1px solid var(--line);
-      position: relative;
-      padding-left: var(--spacing-2xl);
+      opacity: 0;
+      transform: translateY(16px);
     }
 
-    .testimonial::before {
-      content: '"';
-      position: absolute;
-      left: 0;
+    .testimonial:last-child { border-bottom: none; }
+
+    .testimonial-quote {
       font-family: Fraunces, serif;
-      font-size: 4rem;
-      color: var(--navy);
-      opacity: 0.3;
+      font-size: 3rem;
+      font-weight: 200;
+      color: var(--gold);
       line-height: 1;
-    }
-
-    .testimonial:last-child {
-      border-bottom: none;
+      margin-bottom: 1rem;
+      opacity: 0.6;
     }
 
     .testimonial-text {
       font-size: 1.1rem;
-      color: var(--ink);
-      margin-bottom: var(--spacing-md);
       font-weight: 300;
+      color: var(--ink);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      font-family: Fraunces, serif;
+      font-style: italic;
     }
 
     .testimonial-author {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--ink-soft);
-      font-weight: 500;
     }
 
-    .services {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    /* ── SERVICES ── */
+    .services { max-width: 900px; }
 
     .service-item {
-      padding: var(--spacing-2xl) 0;
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
       border-bottom: 1px solid var(--line);
-      display: flex;
-      gap: var(--spacing-2xl);
-      align-items: flex-start;
-      transition: color 0.3s;
       cursor: pointer;
+      transition: color 0.3s;
+      opacity: 0;
+      transform: translateY(12px);
     }
 
-    .service-item:hover {
-      color: var(--navy);
-    }
+    .service-item:first-child { border-top: 1px solid var(--line); }
+
+    .service-item:hover { color: var(--navy); }
 
     .service-number {
       font-family: Fraunces, serif;
-      font-size: 2rem;
+      font-size: 1.25rem;
       font-weight: 300;
-      color: var(--navy);
-      flex: 0 0 60px;
-    }
-
-    .service-content {
-      flex: 1;
+      color: var(--gold);
     }
 
     .service-name {
-      font-size: 1.3rem;
       font-family: Fraunces, serif;
-      font-weight: 400;
-      margin-bottom: var(--spacing-sm);
-      color: inherit;
+      font-size: 1.35rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
     }
 
     .service-desc {
-      font-size: 0.95rem;
+      font-size: 0.875rem;
       color: var(--ink-soft);
+      max-width: 28ch;
     }
 
-    .contact-section {
+    .service-arrow {
+      font-size: 1.25rem;
+      color: var(--ink-soft);
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .service-item:hover .service-arrow {
+      transform: translateX(6px);
+      color: var(--navy);
+    }
+
+    /* ── CONTACT ── */
+    #kontakt {
+      background: var(--navy);
       text-align: center;
     }
 
-    .contact-title {
-      font-family: Fraunces, serif;
-      font-size: 3rem;
-      font-weight: 300;
-      margin-bottom: var(--spacing-3xl);
-    }
+    #kontakt .section-label { color: var(--gold); }
 
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-xl);
-      justify-content: center;
-      align-items: center;
-      margin-bottom: var(--spacing-3xl);
+    #kontakt .section-title {
+      color: var(--paper);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      max-width: 14ch;
+      margin: 0 auto 3rem;
     }
 
     .contact-email {
-      font-size: 1.5rem;
-      color: var(--navy);
-      font-weight: 500;
+      display: inline-block;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--gold);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+      opacity: 0;
+      transform: translateY(16px);
     }
 
-    .contact-email:hover {
-      text-decoration: underline;
-    }
+    .contact-email:hover { border-color: var(--gold); }
 
     .contact-links {
       display: flex;
-      gap: var(--spacing-lg);
       justify-content: center;
+      gap: 2rem;
       flex-wrap: wrap;
-      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(12px);
     }
 
     .contact-links a {
-      color: var(--navy);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(244, 241, 234, 0.5);
+      transition: color 0.3s;
     }
 
-    .contact-links a:hover {
-      text-decoration: underline;
-    }
+    .contact-links a:hover { color: var(--paper); }
 
+    /* ── FOOTER ── */
     footer {
-      padding: var(--spacing-2xl) var(--spacing-lg);
+      padding: 1.75rem 5vw;
+      background: var(--ink);
       text-align: center;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      border-top: 1px solid var(--line);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: rgba(244, 241, 234, 0.3);
+      font-weight: 400;
     }
 
+    /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(26, 24, 20, 0.95);
+      inset: 0;
+      background: rgba(26, 24, 20, 0.97);
       z-index: 2000;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(8px);
     }
 
-    .lightbox.active {
-      display: flex;
-    }
+    .lightbox.active { display: flex; }
 
     .lightbox-content {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      max-width: 92vw;
+      max-height: 92vh;
     }
 
     .lightbox-img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 90vh;
       object-fit: contain;
     }
 
     .lightbox-close {
-      position: absolute;
-      top: var(--spacing-lg);
-      right: var(--spacing-lg);
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
       background: none;
-      border: none;
-      font-size: 2rem;
+      border: 1px solid rgba(244, 241, 234, 0.25);
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
       color: var(--paper);
       cursor: pointer;
       opacity: 0.7;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s, background 0.3s;
     }
 
-    .lightbox-close:hover {
-      opacity: 1;
-    }
+    .lightbox-close:hover { opacity: 1; background: rgba(255,255,255,0.08); }
 
     .lightbox-nav {
-      position: absolute;
+      position: fixed;
       width: 100%;
-      height: 100%;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 0 var(--spacing-lg);
+      padding: 0 1.5rem;
       pointer-events: none;
     }
 
     .lightbox-btn {
       background: none;
-      border: none;
-      font-size: 2rem;
+      border: 1px solid rgba(244, 241, 234, 0.2);
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--paper);
       cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s;
-      padding: var(--spacing-sm);
+      opacity: 0.6;
+      font-size: 1rem;
+      transition: opacity 0.3s, background 0.3s;
       pointer-events: all;
     }
 
-    .lightbox-btn:hover {
-      opacity: 1;
+    .lightbox-btn:hover { opacity: 1; background: rgba(255,255,255,0.08); }
+
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--paper-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    @media (max-width: 768px) {
-      header {
-        padding: var(--spacing-md) var(--spacing-md);
-      }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header { padding: 1rem 1.5rem; }
 
-      .logo {
-        height: 2rem;
-      }
+      .hero-content { padding: 3rem 1.5rem 4rem; }
 
-      .header-nav {
-        gap: var(--spacing-md);
-      }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
 
-      .hero {
+      #onas .inner {
         grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
-        padding: var(--spacing-2xl) var(--spacing-md);
-        min-height: auto;
+        gap: 3rem;
       }
 
-      h1 {
-        font-size: 2rem;
-      }
-
-      .hero-values {
-        flex-wrap: wrap;
-      }
-
-      .hero-image {
-        min-height: 400px;
-      }
-
-      section {
-        padding: var(--spacing-2xl) var(--spacing-md);
-      }
-
-      .section-header {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-      }
-
-      .about-content {
-        flex-direction: column;
-      }
-
-      .about-image {
-        flex: 1;
-      }
+      .about-image { height: 360px; }
 
       .gallery {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 0.375rem;
       }
 
-      .gallery-item:nth-child(1) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
+      .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 220px; }
 
-      .gallery-item:nth-child(3) {
-        grid-row: span 1;
-      }
+      .service-item { grid-template-columns: 2.5rem 1fr; gap: 1.25rem; }
+      .service-desc { display: none; }
+      .service-arrow { display: none; }
 
-      .gallery-item:nth-child(6) {
-        grid-column: span 1;
-      }
+      section { padding: 4rem 1.5rem; }
 
-      .gallery-item:nth-child(9) {
-        grid-column: span 1;
-      }
-
-      .service-item {
-        gap: var(--spacing-lg);
-      }
-
-      .contact-title {
-        font-size: 2rem;
-      }
+      .social-proof-item { padding: 0.5rem 1rem; font-size: 0.7rem; }
     }
   </style>
 </head>
 <body>
-  <header>
+
+  <header id="site-header">
     <img src="assets/img/logo.jpg" alt="Northform Studio" class="logo">
     <nav class="header-nav">
       <div class="dropdown">
@@ -723,136 +744,143 @@
     </nav>
   </header>
 
+  <!-- ── HERO ── -->
   <section id="start">
-    <div class="hero">
-      <div class="hero-content">
-        <h1>Wnętrza projektowane w detalu</h1>
-        <div class="hero-values">
-          <span>Estetyka</span>
-          <span>Funkcjonalność</span>
-          <span>Detale</span>
-        </div>
-        <p class="hero-tagline">Studio projektowania wnętrz</p>
-        <p class="hero-desc">Wizualizacje i projektowanie wnętrz</p>
+    <img class="hero-bg" src="assets/img/realizacje/04.jpg" alt="" loading="eager">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-wordmark">
+        <span>Northform Studio</span>
+        <span class="hero-wordmark-divider"></span>
+        <span class="hero-wordmark-sub">Interior Designer</span>
       </div>
-      <div class="hero-image">
-        <img src="assets/img/realizacje/04.jpg" alt="Wnętrze" width="600" height="700" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'">
-      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
   </section>
 
+  <!-- ── SOCIAL PROOF ── -->
   <div class="social-proof">
     <div class="social-proof-item">9 zrealizowanych wizualizacji</div>
     <div class="social-proof-item">Estetyka i funkcjonalność</div>
-    <div class="social-proof-item">Projektowanie wnętrz na zamówienie</div>
+    <div class="social-proof-item">Projektowanie na zamówienie</div>
     <div class="social-proof-item"><a href="https://instagram.com/northformstudio_" target="_blank">@northformstudio_</a></div>
   </div>
 
+  <!-- ── O NAS ── -->
   <section id="onas">
-    <div class="section-index">01</div>
-    <div class="section-header">
-      <div class="section-title">O nas</div>
-      <div class="about-content">
-        <div class="about-text">
-          <p>Northform Studio to studio projektowania wnętrz, które specjalizuje się w wizualizacjach i projektowaniu przestrzeni. Nasze podejście łączy estetykę z funkcjonalnością, tworząc wnętrza, które są zarówno piękne jak i praktyczne.</p>
-          <p>Każdy projekt traktujemy indywidualnie, zwracając szczególną uwagę na detale, które tworzą całość. Wierzymy, że dobre wnętrze to takie, które doskonale służy swoim użytkownikom i zachwycać będzie na lata.</p>
-        </div>
-        <div class="about-image">
-          <img src="assets/img/realizacje/06.jpg" alt="O nas" width="300" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'">
-        </div>
+    <div class="section-label">01 — O nas</div>
+    <div class="inner">
+      <div>
+        <div class="section-index">01</div>
+        <h2 class="section-title">O Northform Studio</h2>
+        <p class="about-text">Northform Studio to studio projektowania wnętrz specjalizujące się w wizualizacjach i projektowaniu przestrzeni. Nasze podejście łączy estetykę z funkcjonalnością, tworząc wnętrza, które są zarówno piękne, jak i praktyczne.</p>
+        <p class="about-text">Każdy projekt traktujemy indywidualnie, zwracając szczególną uwagę na detale, które tworzą całość. Wierzymy, że dobre wnętrze doskonale służy swoim użytkownikom i zachwyca na lata.</p>
+      </div>
+      <div class="about-image">
+        <img src="assets/img/realizacje/06.jpg" alt="Wnętrze Northform Studio" width="600" height="520" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'">
       </div>
     </div>
   </section>
 
+  <!-- ── REALIZACJE ── -->
   <section id="realizacje">
-    <div class="section-index">02</div>
-    <div class="section-title">Realizacje</div>
+    <div class="section-label">02 — Realizacje</div>
+    <h2 class="section-title">Wybrane projekty</h2>
     <div class="gallery">
-      <div class="gallery-item"><img src="assets/img/realizacje/01.jpg" alt="Realizacja 1" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/02.jpg" alt="Realizacja 2" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/03.jpg" alt="Realizacja 3" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/04.jpg" alt="Realizacja 4" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/05.jpg" alt="Realizacja 5" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/06.jpg" alt="Realizacja 6" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/07.jpg" alt="Realizacja 7" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/08.jpg" alt="Realizacja 8" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
-      <div class="gallery-item"><img src="assets/img/realizacje/09.jpg" alt="Realizacja 9" width="400" height="400" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/01.jpg" alt="Realizacja 1" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/02.jpg" alt="Realizacja 2" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/03.jpg" alt="Realizacja 3" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/04.jpg" alt="Realizacja 4" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/05.jpg" alt="Realizacja 5" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/06.jpg" alt="Realizacja 6" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/07.jpg" alt="Realizacja 7" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/08.jpg" alt="Realizacja 8" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/09.jpg" alt="Realizacja 9" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
     </div>
   </section>
 
+  <!-- ── OPINIE ── -->
   <section id="opinie">
-    <div class="section-index">03</div>
-    <div class="section-title">Opinie klientów</div>
+    <div class="section-label">03 — Opinie</div>
+    <h2 class="section-title">Co mówią klienci</h2>
     <div class="testimonials">
       <div class="testimonial" data-token="{{OPINIA_1_TRESC}}">
-        <div class="testimonial-text">{{OPINIA_1_TRESC}}</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">{{OPINIA_1_TRESC}}</p>
         <div class="testimonial-author">{{OPINIA_1_AUTOR}}</div>
       </div>
       <div class="testimonial" data-token="{{OPINIA_2_TRESC}}">
-        <div class="testimonial-text">{{OPINIA_2_TRESC}}</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">{{OPINIA_2_TRESC}}</p>
         <div class="testimonial-author">{{OPINIA_2_AUTOR}}</div>
       </div>
       <div class="testimonial" data-token="{{OPINIA_3_TRESC}}">
-        <div class="testimonial-text">{{OPINIA_3_TRESC}}</div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">{{OPINIA_3_TRESC}}</p>
         <div class="testimonial-author">{{OPINIA_3_AUTOR}}</div>
       </div>
     </div>
   </section>
 
+  <!-- ── USŁUGI ── -->
   <section id="uslugi">
-    <div class="section-index">04</div>
-    <div class="section-title">Usługi</div>
+    <div class="section-label">04 — Usługi</div>
+    <h2 class="section-title">Co oferujemy</h2>
     <div class="services">
       <div class="service-item">
         <div class="service-number">01</div>
-        <div class="service-content">
+        <div>
           <div class="service-name">Projektowanie wnętrz</div>
-          <div class="service-desc">Pełne projektowanie wnętrz z uwzględnieniem stylu, funkcjonalności i detali</div>
+          <div class="service-desc">Pełne projektowanie z uwzględnieniem stylu, funkcjonalności i detali</div>
         </div>
+        <div class="service-arrow">→</div>
       </div>
       <div class="service-item">
         <div class="service-number">02</div>
-        <div class="service-content">
+        <div>
           <div class="service-name">Wizualizacje</div>
           <div class="service-desc">Profesjonalne wizualizacje projektów wnętrz</div>
         </div>
+        <div class="service-arrow">→</div>
       </div>
       <div class="service-item">
         <div class="service-number">03</div>
-        <div class="service-content">
+        <div>
           <div class="service-name">Konsultacje</div>
           <div class="service-desc">Doradztwo i konsultacje projektowe</div>
         </div>
+        <div class="service-arrow">→</div>
       </div>
     </div>
   </section>
 
+  <!-- ── KONTAKT ── -->
   <section id="kontakt">
-    <div class="section-index">05</div>
-    <div class="contact-section">
-      <h2 class="contact-title">Porozmawiajmy o Twoim wnętrzu</h2>
-      <div class="contact-info">
-        <a href="mailto:kontakt.northformstudio@gmail.com" class="contact-email">kontakt.northformstudio@gmail.com</a>
-        <div class="contact-links">
-          <a href="https://instagram.com/northformstudio_" target="_blank">@northformstudio_</a>
-          <span data-token="{{TELEFON}}">{{TELEFON}}</span>
-          <span data-token="{{LOKALIZACJA}}">{{LOKALIZACJA}}</span>
-        </div>
-      </div>
+    <div class="section-label">05 — Kontakt</div>
+    <h2 class="section-title">Porozmawiajmy<br>o Twoim wnętrzu</h2>
+    <a href="mailto:kontakt.northformstudio@gmail.com" class="contact-email">kontakt.northformstudio@gmail.com</a>
+    <div class="contact-links">
+      <a href="https://instagram.com/northformstudio_" target="_blank">Instagram</a>
+      <span data-token="{{TELEFON}}">{{TELEFON}}</span>
+      <span data-token="{{LOKALIZACJA}}">{{LOKALIZACJA}}</span>
     </div>
   </section>
 
   <footer>
-    <p>Northform Studio — Interior Designer © 2026. Wizualizacje i projektowanie wnętrz.</p>
+    <p>Northform Studio — Interior Designer &copy; 2026</p>
   </footer>
 
+  <!-- ── LIGHTBOX ── -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
       <button class="lightbox-close" aria-label="Zamknij">&times;</button>
       <img class="lightbox-img" src="" alt="">
       <div class="lightbox-nav">
-        <button class="lightbox-btn prev" aria-label="Poprzednia">&lt;</button>
-        <button class="lightbox-btn next" aria-label="Następna">&gt;</button>
+        <button class="lightbox-btn prev" aria-label="Poprzednia">&#8592;</button>
+        <button class="lightbox-btn next" aria-label="Następna">&#8594;</button>
       </div>
     </div>
   </div>
@@ -862,216 +890,158 @@
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
   <script>
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger)
 
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       smoothTouch: false,
-      touchMultiplier: 2,
-    });
+    })
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf) }
+    requestAnimationFrame(raf)
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add(time => lenis.raf(time * 1000))
+    gsap.ticker.lagSmoothing(0)
+
+    // Header scroll state
+    const header = document.getElementById('site-header')
+    ScrollTrigger.create({
+      start: 'top -60px',
+      onEnter: () => header.classList.add('scrolled'),
+      onLeaveBack: () => header.classList.remove('scrolled'),
+    })
+
+    // Hero image load
+    const heroBg = document.querySelector('.hero-bg')
+    const heroReveal = () => {
+      heroBg.classList.add('loaded')
+      gsap.to(heroBg, { opacity: 1, duration: 1.4, ease: 'power2.out' })
+      gsap.to('.hero-wordmark', { opacity: 1, y: 0, duration: 1.1, delay: 0.5, ease: 'power3.out' })
+      gsap.to('.hero-scroll', { opacity: 1, duration: 0.8, delay: 1.4 })
     }
-    requestAnimationFrame(raf);
+    if (heroBg.complete) heroReveal()
+    else heroBg.addEventListener('load', heroReveal)
 
-    lenis.on('scroll', ScrollTrigger.update);
+    // Scroll reveals
+    const reveal = (targets, stagger = 0.12) => {
+      gsap.utils.toArray(targets).forEach((el, i) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          delay: i * stagger,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' },
+        })
+      })
+    }
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    reveal('.section-label')
+    reveal('.section-title')
+    reveal('.about-text')
+    reveal('.about-image')
+    reveal('.testimonial')
+    reveal('.service-item')
+    reveal('.contact-email')
+    reveal('.contact-links')
 
-    gsap.ticker.lagSmoothing(0);
-
-    // Hero animations
-    gsap.to('.hero h1', {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay: 0.2,
-    });
-
-    gsap.to('.hero-values', {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay: 0.4,
-    });
-
-    gsap.to('.hero-tagline', {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay: 0.5,
-    });
-
-    gsap.to('.hero-desc', {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      delay: 0.6,
-    });
-
-    gsap.to('.hero-image img', {
-      opacity: 1,
-      scale: 1,
-      duration: 1.5,
-      delay: 0.3,
-    });
-
-    // Section indices scroll animations
-    gsap.utils.toArray('.section-index').forEach((el) => {
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          markers: false,
-        },
-      });
-    });
-
-    // Dropdown functionality
-    const dropdowns = document.querySelectorAll('.dropdown');
-
-    dropdowns.forEach((dropdown) => {
-      const btn = dropdown.querySelector('.dropdown-btn');
-      const menu = dropdown.querySelector('.dropdown-menu');
-
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        dropdowns.forEach((d) => {
-          d.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false');
-          d.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true');
-        });
+    // Dropdowns
+    const dropdowns = document.querySelectorAll('.dropdown')
+    dropdowns.forEach(dd => {
+      const btn = dd.querySelector('.dropdown-btn')
+      const menu = dd.querySelector('.dropdown-menu')
+      btn.addEventListener('click', e => {
+        e.stopPropagation()
+        const isOpen = btn.getAttribute('aria-expanded') === 'true'
+        dropdowns.forEach(d => {
+          d.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
+          d.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
+        })
         if (!isOpen) {
-          btn.setAttribute('aria-expanded', 'true');
-          menu.setAttribute('aria-hidden', 'false');
+          btn.setAttribute('aria-expanded', 'true')
+          menu.setAttribute('aria-hidden', 'false')
         }
-      });
-
-      menu.querySelectorAll('a, button').forEach((item) => {
+      })
+      menu.querySelectorAll('a, button').forEach(item => {
         item.addEventListener('click', () => {
-          btn.setAttribute('aria-expanded', 'false');
-          menu.setAttribute('aria-hidden', 'true');
-        });
-      });
-    });
+          btn.setAttribute('aria-expanded', 'false')
+          menu.setAttribute('aria-hidden', 'true')
+        })
+      })
+    })
 
     document.addEventListener('click', () => {
-      dropdowns.forEach((dropdown) => {
-        dropdown.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false');
-        dropdown.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true');
-      });
-    });
+      dropdowns.forEach(dd => {
+        dd.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
+        dd.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
+      })
+    })
 
-    // Keyboard navigation for dropdowns
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        dropdowns.forEach((dropdown) => {
-          dropdown.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false');
-          dropdown.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true');
-        });
-      }
-    });
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return
+      dropdowns.forEach(dd => {
+        dd.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
+        dd.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
+      })
+    })
 
-    // Lightbox functionality
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('.lightbox-img');
-    const galleryItems = document.querySelectorAll('.gallery-item img');
-    let currentIndex = 0;
+    // Lightbox
+    const lightbox = document.getElementById('lightbox')
+    const lightboxImg = lightbox.querySelector('.lightbox-img')
+    const galleryItems = document.querySelectorAll('.gallery-item img')
+    let currentIndex = 0
 
-    function showLightbox(index) {
-      currentIndex = index;
-      const img = galleryItems[index];
-      lightboxImg.src = img.src;
-      lightbox.classList.add('active');
+    const showLightbox = index => {
+      currentIndex = index
+      lightboxImg.src = galleryItems[index].src
+      lightbox.classList.add('active')
     }
 
-    galleryItems.forEach((img, index) => {
-      img.parentElement.addEventListener('click', () => {
-        showLightbox(index);
-      });
-    });
+    galleryItems.forEach((img, i) => img.parentElement.addEventListener('click', () => showLightbox(i)))
 
-    lightbox.querySelector('.lightbox-close').addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
+    lightbox.querySelector('.lightbox-close').addEventListener('click', () => lightbox.classList.remove('active'))
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active') })
 
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('active');
-      }
-    });
+    lightbox.querySelector('.next').addEventListener('click', e => {
+      e.stopPropagation()
+      showLightbox((currentIndex + 1) % galleryItems.length)
+    })
 
-    lightbox.querySelector('.next').addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % galleryItems.length;
-      showLightbox(currentIndex);
-    });
+    lightbox.querySelector('.prev').addEventListener('click', e => {
+      e.stopPropagation()
+      showLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length)
+    })
 
-    lightbox.querySelector('.prev').addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-      showLightbox(currentIndex);
-    });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return
+      if (e.key === 'ArrowRight') showLightbox((currentIndex + 1) % galleryItems.length)
+      if (e.key === 'ArrowLeft') showLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length)
+      if (e.key === 'Escape') lightbox.classList.remove('active')
+    })
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'ArrowRight') {
-        currentIndex = (currentIndex + 1) % galleryItems.length;
-        showLightbox(currentIndex);
-      }
-      if (e.key === 'ArrowLeft') {
-        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-        showLightbox(currentIndex);
-      }
-      if (e.key === 'Escape') {
-        lightbox.classList.remove('active');
-      }
-    });
-
-    // Hide empty tokens and sections
+    // Hide unfilled tokens
     document.addEventListener('DOMContentLoaded', () => {
-      const tokenElements = document.querySelectorAll('[data-token]');
-      tokenElements.forEach((el) => {
-        const text = el.textContent || el.value || '';
-        if (text.includes('{{') && text.includes('}}')) {
-          el.classList.add('hidden');
-          if (el.closest('.testimonial')) {
-            el.closest('.testimonial').classList.add('hidden');
-          }
-          if (el.parentElement.classList.contains('contact-links')) {
-            el.classList.add('hidden');
-          }
+      document.querySelectorAll('[data-token]').forEach(el => {
+        const t = el.textContent || ''
+        if (t.includes('{{') && t.includes('}}')) {
+          el.classList.add('hidden')
+          if (el.closest('.testimonial')) el.closest('.testimonial').classList.add('hidden')
         }
-      });
+      })
+      const opinie = document.getElementById('opinie')
+      if (opinie && !opinie.querySelector('.testimonial:not(.hidden)')) opinie.classList.add('hidden')
+    })
 
-      const opinionsSection = document.getElementById('opinie');
-      const visibleTestimonials = opinionsSection.querySelectorAll('.testimonial:not(.hidden)');
-      if (visibleTestimonials.length === 0) {
-        opinionsSection.classList.add('hidden');
-      }
-    });
-
-    // Smooth scroll to anchors
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          lenis.scrollTo(target);
-        }
-      });
-    });
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault()
+        const target = document.querySelector(a.getAttribute('href'))
+        if (target) lenis.scrollTo(target)
+      })
+    })
   </script>
 </body>
 </html>
