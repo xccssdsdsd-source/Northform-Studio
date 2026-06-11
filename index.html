@@ -9,16 +9,16 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --paper: oklch(96% 0.010 125);
-      --paper-2: oklch(92% 0.015 125);
-      --ink: oklch(17% 0.030 155);
-      --ink-soft: oklch(52% 0.028 148);
-      --warm-dark: oklch(22% 0.040 155);
-      --deep: oklch(18% 0.035 155);
+      --paper: oklch(96% 0.008 230);
+      --paper-2: oklch(92% 0.012 230);
+      --ink: oklch(17% 0.038 245);
+      --ink-soft: oklch(52% 0.032 235);
+      --warm-dark: oklch(21% 0.048 242);
+      --deep: oklch(17% 0.042 248);
       --gold: oklch(70% 0.130 73);
       --gold-deep: oklch(60% 0.145 71);
       --line: rgba(255,255,255,0.08);
-      --line-dark: oklch(87% 0.013 125);
+      --line-dark: oklch(87% 0.010 230);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -57,7 +57,7 @@
     }
 
     header.scrolled {
-      background: oklch(96% 0.010 125 / 0.96);
+      background: oklch(96% 0.008 230 / 0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-color: var(--line-dark);
@@ -238,7 +238,7 @@
 
     /* ── O NAS ── */
     #onas {
-      background: var(--paper);
+      background: linear-gradient(135deg, oklch(94% 0.014 230) 0%, oklch(88% 0.022 240) 100%);
     }
 
     #onas .sec-title { color: var(--ink); }
@@ -249,6 +249,15 @@
       gap: 6rem;
       align-items: center;
       max-width: 1200px;
+    }
+
+    .about-text {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 40px rgba(60, 80, 140, 0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+      padding: 2.25rem 2.5rem;
     }
 
     .about-text p {
@@ -281,7 +290,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(42,36,32,0.5) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(20,25,45,0.5) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -332,7 +341,7 @@
     .gallery-item-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(42,36,32,0.75) 0%, transparent 55%);
+      background: linear-gradient(to top, rgba(18,22,45,0.75) 0%, transparent 55%);
       opacity: 0;
       transition: opacity 0.4s;
     }
@@ -369,11 +378,11 @@
     }
 
     .testimonial-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(244, 241, 234, 0.10);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+      background: rgba(40, 55, 100, 0.18);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(120, 160, 255, 0.15);
+      box-shadow: 0 8px 40px rgba(10,20,60,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
       padding: 2.5rem 2rem;
       opacity: 0;
       transform: translateY(20px);
@@ -422,11 +431,11 @@
     }
 
     .service-card {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+      background: rgba(40, 55, 100, 0.18);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(120, 160, 255, 0.14);
+      box-shadow: 0 8px 40px rgba(10,20,60,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
       padding: 2.75rem 2.25rem;
       opacity: 0;
       transform: translateY(20px);
