@@ -691,7 +691,7 @@
     .lightbox-close:hover { opacity: 1; background: rgba(255,255,255,0.08); }
 
     .lightbox-nav {
-      position: fixed;
+      position: absolute;
       width: 100%;
       top: 50%;
       transform: translateY(-50%);
@@ -699,6 +699,7 @@
       justify-content: space-between;
       padding: 0 1.5rem;
       pointer-events: none;
+      z-index: 10;
     }
 
     .lightbox-btn {
@@ -944,10 +945,10 @@
     <div class="lightbox-content">
       <button class="lightbox-close" aria-label="Zamknij">&times;</button>
       <img class="lightbox-img" src="" alt="">
-      <div class="lightbox-nav">
-        <button class="lightbox-btn prev" aria-label="Poprzednia">&#8592;</button>
-        <button class="lightbox-btn next" aria-label="Następna">&#8594;</button>
-      </div>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-btn prev" aria-label="Poprzednia">&#8592;</button>
+      <button class="lightbox-btn next" aria-label="Następna">&#8594;</button>
     </div>
   </div>
 
