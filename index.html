@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Northform Studio — Interior Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Northform Studio | Interior Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --paper: #F5F0E8;
-      --paper-2: #EDE7D9;
-      --ink: #1A1714;
-      --ink-soft: #7B7167;
-      --warm-dark: #2A2420;
-      --deep: #1C1916;
-      --gold: #C4975A;
-      --gold-deep: #A07535;
-      --line: rgba(255,255,255,0.10);
-      --line-dark: #D0C9BF;
+      --paper: oklch(96% 0.010 125);
+      --paper-2: oklch(92% 0.015 125);
+      --ink: oklch(17% 0.030 155);
+      --ink-soft: oklch(52% 0.028 148);
+      --warm-dark: oklch(22% 0.040 155);
+      --deep: oklch(18% 0.035 155);
+      --gold: oklch(70% 0.130 73);
+      --gold-deep: oklch(60% 0.145 71);
+      --line: rgba(255,255,255,0.08);
+      --line-dark: oklch(87% 0.013 125);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -28,14 +28,14 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: Manrope, sans-serif;
+      font-family: Outfit, sans-serif;
       background: var(--paper);
       color: var(--ink);
       line-height: 1.7;
       overflow-x: hidden;
     }
 
-    h1, h2, h3 { font-family: Fraunces, serif; font-weight: 200; letter-spacing: -0.03em; }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; letter-spacing: -0.03em; }
 
     p { line-height: 1.75; }
 
@@ -57,7 +57,7 @@
     }
 
     header.scrolled {
-      background: rgba(245, 240, 232, 0.96);
+      background: oklch(96% 0.010 125 / 0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-color: var(--line-dark);
@@ -79,7 +79,7 @@
     }
 
     .nav-link {
-      font-family: Manrope, sans-serif;
+      font-family: Outfit, sans-serif;
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.1em;
@@ -157,9 +157,9 @@
     }
 
     .mobile-menu a {
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 8vw, 3.5rem);
-      font-weight: 200;
+      font-weight: 300;
       color: var(--paper);
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -210,8 +210,8 @@
     }
 
     .hero-wordmark {
-      font-family: Fraunces, serif;
-      font-weight: 400;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -225,8 +225,8 @@
     section { padding: 7rem 5vw; }
 
     .sec-title {
-      font-family: Fraunces, serif;
-      font-weight: 200;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(4.5rem, 11vw, 10rem);
       letter-spacing: -0.02em;
       text-transform: uppercase;
@@ -343,7 +343,7 @@
       position: absolute;
       bottom: 1.1rem;
       left: 1.1rem;
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 0.8rem;
       font-weight: 300;
       color: rgba(244, 241, 234, 0.9);
@@ -380,9 +380,9 @@
     }
 
     .testimonial-quote {
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 3rem;
-      font-weight: 200;
+      font-weight: 300;
       color: var(--gold);
       line-height: 1;
       margin-bottom: 1rem;
@@ -395,7 +395,7 @@
       color: rgba(244,241,234,0.88);
       line-height: 1.75;
       margin-bottom: 1.5rem;
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-style: italic;
     }
 
@@ -409,10 +409,10 @@
 
     /* ── USŁUGI ── */
     #uslugi {
-      background: var(--paper-2);
+      background: var(--warm-dark);
     }
 
-    #uslugi .sec-title { color: var(--ink); }
+    #uslugi .sec-title { color: var(--paper); }
 
     .services-cards {
       display: grid;
@@ -422,18 +422,18 @@
     }
 
     .service-card {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 4px 28px rgba(26,23,20,0.09), 0 1px 3px rgba(196,151,90,0.07);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
       padding: 2.75rem 2.25rem;
       opacity: 0;
       transform: translateY(20px);
     }
 
     .service-card-number {
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 0.85rem;
       font-weight: 300;
       color: var(--gold);
@@ -442,18 +442,18 @@
     }
 
     .service-card-name {
-      font-family: Fraunces, serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 1.45rem;
-      font-weight: 200;
+      font-weight: 300;
       letter-spacing: -0.02em;
-      color: var(--ink);
+      color: var(--paper);
       margin-bottom: 1rem;
       line-height: 1.2;
     }
 
     .service-card-desc {
       font-size: 0.875rem;
-      color: var(--ink-soft);
+      color: rgba(238, 237, 232, 0.58);
       line-height: 1.7;
     }
 
@@ -523,7 +523,7 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(244,241,234,0.18);
       padding: 0.875rem 1rem;
-      font-family: Manrope, sans-serif;
+      font-family: Outfit, sans-serif;
       font-size: 0.95rem;
       font-weight: 300;
       color: rgba(244,241,234,0.9);
@@ -554,7 +554,7 @@
       color: var(--gold);
       border: none;
       padding: 0.9rem 2.25rem;
-      font-family: Manrope, sans-serif;
+      font-family: Outfit, sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.12em;
@@ -779,17 +779,17 @@
       <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Northform Studio całkowicie odmieniło naszą przestrzeń. Każdy detal był przemyślany, a efekt końcowy przeszedł nasze najśmielsze oczekiwania. Polecamy z całego serca.</p>
-        <div class="testimonial-author">Anna K. — Warszawa</div>
+        <div class="testimonial-author">Anna K., Warszawa</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">Profesjonalne podejście, terminowość i wyjątkowe wyczucie estetyki. Współpraca z Northform Studio to czysta przyjemność — od pierwszego szkicu po finalną realizację.</p>
-        <div class="testimonial-author">Marek W. — Kraków</div>
+        <p class="testimonial-text">Profesjonalne podejście, terminowość i wyjątkowe wyczucie estetyki. Współpraca z Northform Studio to czysta przyjemność: od pierwszego szkicu po finalną realizację.</p>
+        <div class="testimonial-author">Marek W., Kraków</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Wizualizacje, które otrzymaliśmy, były niesamowicie dokładne. Projekt wnętrza idealnie odzwierciedlił nasze potrzeby i stworzył przestrzeń, w której naprawdę chce się przebywać.</p>
-        <div class="testimonial-author">Karolina i Piotr M. — Gdańsk</div>
+        <div class="testimonial-author">Karolina i Piotr M., Gdańsk</div>
       </div>
     </div>
   </section>
@@ -844,7 +844,7 @@
   </section>
 
   <footer>
-    <p>Northform Studio — Interior Designer &copy; 2026</p>
+    <p>Northform Studio | Interior Designer &copy; 2026</p>
   </footer>
 
   <div class="lightbox" id="lightbox">
@@ -910,9 +910,23 @@
     reveal('.sec-title')
     reveal('.about-text p')
     reveal('.about-image')
-    reveal('.testimonial')
-    reveal('.service-item')
+    reveal('.testimonial-card')
+    reveal('.service-card')
     reveal('.contact-grid')
+
+    gsap.utils.toArray('.gallery-item').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 92%' },
+          delay: (i % 4) * 0.08,
+        }
+      )
+    })
 
     const hamburger = document.querySelector('.hamburger')
     const mobileMenu = document.getElementById('mobile-menu')
