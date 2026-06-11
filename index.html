@@ -9,17 +9,16 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --paper: #F4F1EA;
-      --paper-2: #EAE5DB;
-      --ink: #0F172A;
-      --ink-soft: #64748B;
-      --blue: #1E3A8A;
-      --blue-mid: #2563EB;
-      --blue-dark: #0F1F5C;
-      --blue-tint: #EFF6FF;
-      --gold: #C9A96E;
-      --line: rgba(255,255,255,0.12);
-      --line-dark: #D8D2C6;
+      --paper: #F5F0E8;
+      --paper-2: #EDE7D9;
+      --ink: #1A1714;
+      --ink-soft: #7B7167;
+      --warm-dark: #2A2420;
+      --deep: #1C1916;
+      --gold: #C4975A;
+      --gold-deep: #A07535;
+      --line: rgba(255,255,255,0.10);
+      --line-dark: #D0C9BF;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -58,7 +57,7 @@
     }
 
     header.scrolled {
-      background: rgba(244, 241, 234, 0.96);
+      background: rgba(245, 240, 232, 0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-color: var(--line-dark);
@@ -106,8 +105,8 @@
     .nav-link:hover::after { width: 100%; }
 
     header.scrolled .nav-link { color: var(--ink); }
-    header.scrolled .nav-link::after { background: var(--blue-mid); }
-    header.scrolled .nav-link:hover { color: var(--blue); }
+    header.scrolled .nav-link::after { background: var(--gold); }
+    header.scrolled .nav-link:hover { color: var(--warm-dark); }
 
     .hamburger {
       display: none;
@@ -195,7 +194,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, rgba(15,31,92,0.5) 0%, rgba(15,26,40,0.3) 50%, rgba(15,26,40,0.75) 100%);
+      background: rgba(26,23,20,0.68);
     }
 
     .hero-content {
@@ -212,11 +211,12 @@
 
     .hero-wordmark {
       font-family: Fraunces, serif;
-      font-weight: 200;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      letter-spacing: 0.14em;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--paper);
+      color: #ffffff;
+      text-shadow: 0 0 60px rgba(0,0,0,0.8), 0 2px 12px rgba(0,0,0,0.6);
       opacity: 0;
       transform: translateY(20px);
     }
@@ -241,7 +241,7 @@
       background: var(--paper);
     }
 
-    #onas .sec-title { color: var(--blue); }
+    #onas .sec-title { color: var(--ink); }
 
     #onas .inner {
       display: grid;
@@ -281,7 +281,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(30,58,138,0.4) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(42,36,32,0.5) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -332,30 +332,52 @@
     .gallery-item-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(30,58,138,0.55) 0%, transparent 50%);
+      background: linear-gradient(to top, rgba(42,36,32,0.75) 0%, transparent 55%);
       opacity: 0;
       transition: opacity 0.4s;
     }
 
     .gallery-item:hover .gallery-item-overlay { opacity: 1; }
 
+    .gallery-item-label {
+      position: absolute;
+      bottom: 1.1rem;
+      left: 1.1rem;
+      font-family: Fraunces, serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(244, 241, 234, 0.9);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: 2;
+    }
+
     /* ── OPINIE ── */
     #opinie {
-      background: var(--blue);
+      background: var(--warm-dark);
     }
 
     #opinie .sec-title { color: var(--paper); }
 
-    .testimonials { max-width: 780px; }
-
-    .testimonial {
-      padding: 2.5rem 0;
-      border-bottom: 1px solid rgba(244,241,234,0.15);
-      opacity: 0;
-      transform: translateY(16px);
+    .testimonials-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
     }
 
-    .testimonial:last-child { border-bottom: none; }
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(244, 241, 234, 0.10);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 2.5rem 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
     .testimonial-quote {
       font-family: Fraunces, serif;
@@ -368,17 +390,17 @@
     }
 
     .testimonial-text {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 300;
-      color: rgba(244,241,234,0.9);
+      color: rgba(244,241,234,0.88);
       line-height: 1.75;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       font-family: Fraunces, serif;
       font-style: italic;
     }
 
     .testimonial-author {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -390,60 +412,54 @@
       background: var(--paper-2);
     }
 
-    #uslugi .sec-title { color: var(--blue); }
+    #uslugi .sec-title { color: var(--ink); }
 
-    .services { max-width: 900px; }
-
-    .service-item {
+    .services-cards {
       display: grid;
-      grid-template-columns: 3rem 1fr auto;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--line-dark);
-      cursor: pointer;
-      transition: color 0.3s;
-      opacity: 0;
-      transform: translateY(12px);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
     }
 
-    .service-item:first-child { border-top: 1px solid var(--line-dark); }
-    .service-item:hover { color: var(--blue); }
+    .service-card {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 4px 28px rgba(26,23,20,0.09), 0 1px 3px rgba(196,151,90,0.07);
+      padding: 2.75rem 2.25rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
-    .service-number {
+    .service-card-number {
       font-family: Fraunces, serif;
-      font-size: 1.25rem;
+      font-size: 0.85rem;
       font-weight: 300;
       color: var(--gold);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
     }
 
-    .service-name {
+    .service-card-name {
       font-family: Fraunces, serif;
-      font-size: 1.35rem;
-      font-weight: 300;
+      font-size: 1.45rem;
+      font-weight: 200;
       letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      line-height: 1.2;
     }
 
-    .service-desc {
+    .service-card-desc {
       font-size: 0.875rem;
       color: var(--ink-soft);
-      max-width: 28ch;
-    }
-
-    .service-arrow {
-      font-size: 1.25rem;
-      color: var(--ink-soft);
-      transition: transform 0.3s, color 0.3s;
-    }
-
-    .service-item:hover .service-arrow {
-      transform: translateX(6px);
-      color: var(--blue-mid);
+      line-height: 1.7;
     }
 
     /* ── KONTAKT ── */
     #kontakt {
-      background: var(--blue-dark);
+      background: var(--deep);
     }
 
     #kontakt .sec-title { color: var(--paper); }
@@ -524,7 +540,7 @@
 
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--blue-mid);
+      border-color: var(--gold);
       background: rgba(255,255,255,0.08);
     }
 
@@ -534,8 +550,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.75rem;
-      background: var(--blue-mid);
-      color: #fff;
+      background: var(--ink);
+      color: var(--gold);
       border: none;
       padding: 0.9rem 2.25rem;
       font-family: Manrope, sans-serif;
@@ -547,14 +563,14 @@
       transition: background 0.25s, transform 0.2s;
     }
 
-    .btn-submit:hover { background: #1D4ED8; transform: translateY(-1px); }
+    .btn-submit:hover { background: var(--warm-dark); transform: translateY(-1px); }
     .btn-submit:active { transform: translateY(0); }
 
     .form-success {
       display: none;
       padding: 1rem 1.5rem;
-      background: rgba(37, 99, 235, 0.2);
-      border: 1px solid rgba(37,99,235,0.4);
+      background: rgba(196,151,90,0.15);
+      border: 1px solid rgba(196,151,90,0.35);
       color: rgba(244,241,234,0.9);
       font-size: 0.9rem;
       margin-top: 1rem;
@@ -576,7 +592,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 26, 40, 0.97);
+      background: rgba(26, 23, 20, 0.97);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -681,9 +697,8 @@
 
       .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 220px; }
 
-      .service-item { grid-template-columns: 2.5rem 1fr; gap: 1.25rem; }
-      .service-desc { display: none; }
-      .service-arrow { display: none; }
+      .services-cards { grid-template-columns: 1fr; }
+      .testimonials-cards { grid-template-columns: 1fr; }
 
       .contact-grid {
         grid-template-columns: 1fr;
@@ -746,32 +761,32 @@
   <section id="realizacje">
     <h2 class="sec-title">Realizacje</h2>
     <div class="gallery">
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/01.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/02.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/03.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/04.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/05.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/06.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/07.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/08.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/09.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/01.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 01</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/02.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 02</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/03.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 03</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/04.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 04</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/05.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 05</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/06.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 06</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/07.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 07</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/08.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 08</div></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/09.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"><div class="gallery-item-label">Realizacja 09</div></div>
     </div>
   </section>
 
   <section id="opinie">
     <h2 class="sec-title">Opinie</h2>
-    <div class="testimonials">
-      <div class="testimonial">
+    <div class="testimonials-cards">
+      <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Northform Studio całkowicie odmieniło naszą przestrzeń. Każdy detal był przemyślany, a efekt końcowy przeszedł nasze najśmielsze oczekiwania. Polecamy z całego serca.</p>
         <div class="testimonial-author">Anna K. — Warszawa</div>
       </div>
-      <div class="testimonial">
+      <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Profesjonalne podejście, terminowość i wyjątkowe wyczucie estetyki. Współpraca z Northform Studio to czysta przyjemność — od pierwszego szkicu po finalną realizację.</p>
         <div class="testimonial-author">Marek W. — Kraków</div>
       </div>
-      <div class="testimonial">
+      <div class="testimonial-card">
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text">Wizualizacje, które otrzymaliśmy, były niesamowicie dokładne. Projekt wnętrza idealnie odzwierciedlił nasze potrzeby i stworzył przestrzeń, w której naprawdę chce się przebywać.</p>
         <div class="testimonial-author">Karolina i Piotr M. — Gdańsk</div>
@@ -781,30 +796,21 @@
 
   <section id="uslugi">
     <h2 class="sec-title">Usługi</h2>
-    <div class="services">
-      <div class="service-item">
-        <div class="service-number">01</div>
-        <div>
-          <div class="service-name">Projektowanie wnętrz</div>
-          <div class="service-desc">Pełne projektowanie z uwzględnieniem stylu, funkcjonalności i detali</div>
-        </div>
-        <div class="service-arrow">→</div>
+    <div class="services-cards">
+      <div class="service-card">
+        <div class="service-card-number">01</div>
+        <div class="service-card-name">Projektowanie wnętrz</div>
+        <div class="service-card-desc">Pełne projektowanie z uwzględnieniem stylu, funkcjonalności i detali</div>
       </div>
-      <div class="service-item">
-        <div class="service-number">02</div>
-        <div>
-          <div class="service-name">Wizualizacje</div>
-          <div class="service-desc">Profesjonalne wizualizacje projektów wnętrz</div>
-        </div>
-        <div class="service-arrow">→</div>
+      <div class="service-card">
+        <div class="service-card-number">02</div>
+        <div class="service-card-name">Wizualizacje</div>
+        <div class="service-card-desc">Profesjonalne wizualizacje projektów wnętrz</div>
       </div>
-      <div class="service-item">
-        <div class="service-number">03</div>
-        <div>
-          <div class="service-name">Konsultacje</div>
-          <div class="service-desc">Doradztwo i konsultacje projektowe</div>
-        </div>
-        <div class="service-arrow">→</div>
+      <div class="service-card">
+        <div class="service-card-number">03</div>
+        <div class="service-card-name">Konsultacje</div>
+        <div class="service-card-desc">Doradztwo i konsultacje projektowe</div>
       </div>
     </div>
   </section>
