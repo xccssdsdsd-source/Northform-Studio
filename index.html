@@ -11,11 +11,15 @@
     :root {
       --paper: #F4F1EA;
       --paper-2: #EAE5DB;
-      --ink: #1A1814;
-      --ink-soft: #6B6358;
-      --navy: #2A3A4F;
+      --ink: #0F172A;
+      --ink-soft: #64748B;
+      --blue: #1E3A8A;
+      --blue-mid: #2563EB;
+      --blue-dark: #0F1F5C;
+      --blue-tint: #EFF6FF;
       --gold: #C9A96E;
-      --line: #D8D2C6;
+      --line: rgba(255,255,255,0.12);
+      --line-dark: #D8D2C6;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -32,13 +36,9 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3 {
-      font-family: Fraunces, serif;
-      font-weight: 300;
-      letter-spacing: -0.03em;
-    }
+    h1, h2, h3 { font-family: Fraunces, serif; font-weight: 200; letter-spacing: -0.03em; }
 
-    p { color: var(--ink-soft); line-height: 1.75; }
+    p { line-height: 1.75; }
 
     a { color: inherit; text-decoration: none; }
 
@@ -61,13 +61,14 @@
       background: rgba(244, 241, 234, 0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-color: var(--line);
+      border-color: var(--line-dark);
     }
 
     .logo {
       height: 2.25rem;
       width: auto;
       mix-blend-mode: multiply;
+      flex-shrink: 0;
     }
 
     header.scrolled .logo { mix-blend-mode: normal; }
@@ -78,82 +79,95 @@
       align-items: center;
     }
 
-    .dropdown { position: relative; }
-
-    .dropdown-btn {
-      background: none;
-      border: none;
+    .nav-link {
       font-family: Manrope, sans-serif;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--paper);
+      color: rgba(244, 241, 234, 0.8);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
       transition: color 0.3s, opacity 0.3s;
-      opacity: 0.85;
+      position: relative;
     }
 
-    header.scrolled .dropdown-btn { color: var(--ink); }
-
-    .dropdown-btn:hover { opacity: 1; }
-
-    .dropdown-btn::after {
+    .nav-link::after {
       content: '';
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-right: 1px solid currentColor;
-      border-bottom: 1px solid currentColor;
-      transform: rotate(45deg) translateY(-2px);
-      transition: transform 0.3s;
-    }
-
-    .dropdown-btn[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-2px); }
-
-    .dropdown-menu {
       position: absolute;
-      top: calc(100% + 0.75rem);
-      right: 0;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      min-width: 200px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px);
-      transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
-      z-index: 1001;
-      box-shadow: 0 8px 32px rgba(42, 58, 79, 0.1), 0 2px 8px rgba(42, 58, 79, 0.06);
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
     }
 
-    .dropdown-menu[aria-hidden="false"] {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
+    .nav-link:hover { color: rgba(244, 241, 234, 1); }
+    .nav-link:hover::after { width: 100%; }
 
-    .dropdown-menu a, .dropdown-menu button {
-      display: block;
-      width: 100%;
-      padding: 0.75rem 1.25rem;
-      font-family: Manrope, sans-serif;
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--ink);
-      cursor: pointer;
+    header.scrolled .nav-link { color: var(--ink); }
+    header.scrolled .nav-link::after { background: var(--blue-mid); }
+    header.scrolled .nav-link:hover { color: var(--blue); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
       background: none;
       border: none;
-      text-align: left;
-      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+      padding: 4px;
     }
 
-    .dropdown-menu a:hover, .dropdown-menu button:hover {
-      background: var(--paper-2);
-      color: var(--navy);
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: rgba(244, 241, 234, 0.85);
+      transition: transform 0.3s, opacity 0.3s, background 0.4s;
     }
+
+    header.scrolled .hamburger span { background: var(--ink); }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ink);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: Fraunces, serif;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 200;
+      color: var(--paper);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
 
     /* ── HERO ── */
     #start {
@@ -162,6 +176,7 @@
       min-height: 600px;
       overflow: hidden;
       background: var(--ink);
+      padding: 0;
     }
 
     .hero-bg {
@@ -180,15 +195,8 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(26, 24, 20, 0.55) 0%,
-        rgba(26, 24, 20, 0.2) 50%,
-        rgba(26, 24, 20, 0.7) 100%
-      );
+      background: linear-gradient(160deg, rgba(15,31,92,0.5) 0%, rgba(15,26,40,0.3) 50%, rgba(15,26,40,0.75) 100%);
     }
-
-    ._hero-content-old {}
 
     .hero-content {
       position: relative;
@@ -204,152 +212,37 @@
 
     .hero-wordmark {
       font-family: Fraunces, serif;
-      font-weight: 300;
-      font-size: clamp(1.6rem, 3.5vw, 2.75rem);
-      letter-spacing: 0.12em;
+      font-weight: 200;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--paper);
       opacity: 0;
       transform: translateY(20px);
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      white-space: nowrap;
     }
-
-    .hero-wordmark-divider {
-      display: block;
-      width: 1px;
-      height: 1.4em;
-      background: rgba(244, 241, 234, 0.35);
-      flex-shrink: 0;
-    }
-
-    .hero-wordmark-sub {
-      font-style: italic;
-      font-weight: 200;
-      font-size: 0.85em;
-      color: rgba(244, 241, 234, 0.65);
-      letter-spacing: 0.08em;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: rgba(244, 241, 234, 0.45);
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 500;
-      opacity: 0;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: rgba(244, 241, 234, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scroll-line::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gold);
-      animation: scrollLine 1.8s ease-in-out infinite;
-    }
-
-    @keyframes scrollLine {
-      0% { top: -100%; }
-      100% { top: 100%; }
-    }
-
-    /* ── SOCIAL PROOF BAR ── */
-    .social-proof {
-      background: var(--navy);
-      padding: 1rem 5vw;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      justify-content: center;
-      align-items: stretch;
-    }
-
-    .social-proof-item {
-      font-family: Manrope, sans-serif;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(244, 241, 234, 0.6);
-      padding: 0.5rem 2rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .social-proof-item:not(:last-child) {
-      border-right: 1px solid rgba(244, 241, 234, 0.15);
-    }
-
-    .social-proof-item a {
-      color: var(--gold);
-      transition: opacity 0.2s;
-    }
-
-    .social-proof-item a:hover { opacity: 0.7; }
 
     /* ── SECTIONS ── */
-    section { padding: 6rem 5vw; }
+    section { padding: 7rem 5vw; }
 
-    #start { padding: 0; }
-
-    section:nth-child(even) { background: var(--paper-2); }
-
-    .section-label {
-      font-family: Manrope, sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      opacity: 0;
-      transform: translateY(12px);
-    }
-
-    .section-index {
+    .sec-title {
       font-family: Fraunces, serif;
-      font-size: clamp(4rem, 8vw, 7rem);
       font-weight: 200;
-      color: var(--navy);
-      opacity: 0.08;
-      line-height: 1;
-      margin-bottom: -1rem;
-      transform: translateY(0);
-    }
-
-    .section-title {
-      font-family: Fraunces, serif;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 300;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin-bottom: 2.5rem;
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 0.9;
+      margin-bottom: 4.5rem;
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(24px);
     }
 
-    /* ── ABOUT ── */
+    /* ── O NAS ── */
+    #onas {
+      background: var(--paper);
+    }
+
+    #onas .sec-title { color: var(--blue); }
+
     #onas .inner {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
@@ -362,6 +255,7 @@
       font-size: 1.05rem;
       line-height: 1.8;
       margin-bottom: 1.25rem;
+      color: var(--ink-soft);
       opacity: 0;
       transform: translateY(16px);
     }
@@ -387,15 +281,16 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(42, 58, 79, 0.35) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(30,58,138,0.4) 0%, transparent 60%);
       pointer-events: none;
     }
 
-    /* ── GALLERY ── */
-    #realizacje { background: var(--ink); }
+    /* ── REALIZACJE ── */
+    #realizacje {
+      background: var(--ink);
+    }
 
-    #realizacje .section-label { color: var(--gold); }
-    #realizacje .section-title { color: var(--paper); }
+    #realizacje .sec-title { color: var(--paper); }
 
     .gallery {
       display: grid;
@@ -437,19 +332,25 @@
     .gallery-item-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(26,24,20,0.6) 0%, transparent 50%);
+      background: linear-gradient(to top, rgba(30,58,138,0.55) 0%, transparent 50%);
       opacity: 0;
       transition: opacity 0.4s;
     }
 
     .gallery-item:hover .gallery-item-overlay { opacity: 1; }
 
-    /* ── TESTIMONIALS ── */
+    /* ── OPINIE ── */
+    #opinie {
+      background: var(--blue);
+    }
+
+    #opinie .sec-title { color: var(--paper); }
+
     .testimonials { max-width: 780px; }
 
     .testimonial {
       padding: 2.5rem 0;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid rgba(244,241,234,0.15);
       opacity: 0;
       transform: translateY(16px);
     }
@@ -463,13 +364,13 @@
       color: var(--gold);
       line-height: 1;
       margin-bottom: 1rem;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     .testimonial-text {
       font-size: 1.1rem;
       font-weight: 300;
-      color: var(--ink);
+      color: rgba(244,241,234,0.9);
       line-height: 1.75;
       margin-bottom: 1.25rem;
       font-family: Fraunces, serif;
@@ -477,14 +378,20 @@
     }
 
     .testimonial-author {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--ink-soft);
+      color: var(--gold);
     }
 
-    /* ── SERVICES ── */
+    /* ── USŁUGI ── */
+    #uslugi {
+      background: var(--paper-2);
+    }
+
+    #uslugi .sec-title { color: var(--blue); }
+
     .services { max-width: 900px; }
 
     .service-item {
@@ -493,16 +400,15 @@
       align-items: center;
       gap: 2rem;
       padding: 2rem 0;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--line-dark);
       cursor: pointer;
       transition: color 0.3s;
       opacity: 0;
       transform: translateY(12px);
     }
 
-    .service-item:first-child { border-top: 1px solid var(--line); }
-
-    .service-item:hover { color: var(--navy); }
+    .service-item:first-child { border-top: 1px solid var(--line-dark); }
+    .service-item:hover { color: var(--blue); }
 
     .service-number {
       font-family: Fraunces, serif;
@@ -532,68 +438,136 @@
 
     .service-item:hover .service-arrow {
       transform: translateX(6px);
-      color: var(--navy);
+      color: var(--blue-mid);
     }
 
-    /* ── CONTACT ── */
+    /* ── KONTAKT ── */
     #kontakt {
-      background: var(--navy);
-      text-align: center;
+      background: var(--blue-dark);
     }
 
-    #kontakt .section-label { color: var(--gold); }
+    #kontakt .sec-title { color: var(--paper); }
 
-    #kontakt .section-title {
-      color: var(--paper);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      max-width: 14ch;
-      margin: 0 auto 3rem;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      align-items: start;
+      max-width: 1100px;
+      opacity: 0;
+      transform: translateY(20px);
     }
 
-    .contact-email {
-      display: inline-block;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    .contact-info { }
+
+    .contact-info-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: var(--gold);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      margin-bottom: 2rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-      opacity: 0;
-      transform: translateY(16px);
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
     }
 
-    .contact-email:hover { border-color: var(--gold); }
+    .contact-info-label:first-child { margin-top: 0; }
 
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(12px);
+    .contact-info-value {
+      font-size: 1rem;
+      color: rgba(244,241,234,0.8);
+      font-weight: 300;
     }
 
-    .contact-links a {
+    .contact-info-value a {
+      color: rgba(244,241,234,0.8);
+      transition: color 0.2s;
+    }
+
+    .contact-info-value a:hover { color: var(--gold); }
+
+    .contact-form { }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(244,241,234,0.18);
+      padding: 0.875rem 1rem;
+      font-family: Manrope, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(244,241,234,0.9);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(244,241,234,0.3);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue-mid);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--blue-mid);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 2.25rem;
+      font-family: Manrope, sans-serif;
       font-size: 0.8rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(244, 241, 234, 0.5);
-      transition: color 0.3s;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
     }
 
-    .contact-links a:hover { color: var(--paper); }
+    .btn-submit:hover { background: #1D4ED8; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .form-success {
+      display: none;
+      padding: 1rem 1.5rem;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid rgba(37,99,235,0.4);
+      color: rgba(244,241,234,0.9);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
 
     /* ── FOOTER ── */
     footer {
       padding: 1.75rem 5vw;
       background: var(--ink);
       text-align: center;
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-      color: rgba(244, 241, 234, 0.3);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: rgba(244, 241, 234, 0.25);
       font-weight: 400;
     }
 
@@ -602,7 +576,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(26, 24, 20, 0.97);
+      background: rgba(15, 26, 40, 0.97);
       z-index: 2000;
       align-items: center;
       justify-content: center;
@@ -689,9 +663,8 @@
     @media (max-width: 900px) {
       header { padding: 1rem 1.5rem; }
 
-      .hero-content { padding: 3rem 1.5rem 4rem; }
-
-      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .header-nav { display: none; }
+      .hamburger { display: flex; }
 
       #onas .inner {
         grid-template-columns: 1fr;
@@ -712,72 +685,57 @@
       .service-desc { display: none; }
       .service-arrow { display: none; }
 
-      section { padding: 4rem 1.5rem; }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
 
-      .social-proof-item { padding: 0.5rem 1rem; font-size: 0.7rem; }
+      section { padding: 5rem 1.5rem; }
+
+      .sec-title { font-size: clamp(3.5rem, 15vw, 6rem); margin-bottom: 3rem; }
     }
   </style>
 </head>
 <body>
 
   <header id="site-header">
-    <img src="assets/img/logo.jpg" alt="Northform Studio" class="logo">
+    <a href="#start"><img src="assets/img/logo.jpg" alt="Northform Studio" class="logo"></a>
     <nav class="header-nav">
-      <div class="dropdown">
-        <button class="dropdown-btn" aria-expanded="false" aria-label="Menu główne">Menu</button>
-        <div class="dropdown-menu" aria-hidden="true">
-          <a href="#onas">O nas</a>
-          <a href="#realizacje">Realizacje</a>
-          <a href="#opinie">Opinie</a>
-          <a href="#uslugi">Usługi</a>
-          <a href="#kontakt">Kontakt</a>
-        </div>
-      </div>
-      <div class="dropdown">
-        <button class="dropdown-btn" aria-expanded="false" aria-label="Kontakt">Kontakt</button>
-        <div class="dropdown-menu" aria-hidden="true">
-          <a href="mailto:kontakt.northformstudio@gmail.com">E-mail</a>
-          <a href="https://instagram.com/northformstudio_" target="_blank">Instagram</a>
-          <button data-token="{{TELEFON}}">{{TELEFON}}</button>
-        </div>
-      </div>
+      <a href="#onas" class="nav-link">O nas</a>
+      <a href="#realizacje" class="nav-link">Realizacje</a>
+      <a href="#opinie" class="nav-link">Opinie</a>
+      <a href="#uslugi" class="nav-link">Usługi</a>
+      <a href="#kontakt" class="nav-link">Kontakt</a>
     </nav>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <!-- ── HERO ── -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#onas">O nas</a>
+    <a href="#realizacje">Realizacje</a>
+    <a href="#opinie">Opinie</a>
+    <a href="#uslugi">Usługi</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+
   <section id="start">
-    <img class="hero-bg" src="assets/img/realizacje/04.jpg" alt="" loading="eager">
+    <img class="hero-bg" src="assets/img/realizacje/04.jpg" loading="eager">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-wordmark">
-        <span>Northform Studio</span>
-        <span class="hero-wordmark-divider"></span>
-        <span class="hero-wordmark-sub">Interior Designer</span>
-      </div>
-    </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
+      <div class="hero-wordmark">Northform Studio</div>
     </div>
   </section>
 
-  <!-- ── SOCIAL PROOF ── -->
-  <div class="social-proof">
-    <div class="social-proof-item">9 zrealizowanych wizualizacji</div>
-    <div class="social-proof-item">Estetyka i funkcjonalność</div>
-    <div class="social-proof-item">Projektowanie na zamówienie</div>
-    <div class="social-proof-item"><a href="https://instagram.com/northformstudio_" target="_blank">@northformstudio_</a></div>
-  </div>
-
-  <!-- ── O NAS ── -->
   <section id="onas">
-    <div class="section-label">01 — O nas</div>
+    <h2 class="sec-title">O nas</h2>
     <div class="inner">
       <div>
-        <div class="section-index">01</div>
-        <h2 class="section-title">O Northform Studio</h2>
-        <p class="about-text">Northform Studio to studio projektowania wnętrz specjalizujące się w wizualizacjach i projektowaniu przestrzeni. Nasze podejście łączy estetykę z funkcjonalnością, tworząc wnętrza, które są zarówno piękne, jak i praktyczne.</p>
-        <p class="about-text">Każdy projekt traktujemy indywidualnie, zwracając szczególną uwagę na detale, które tworzą całość. Wierzymy, że dobre wnętrze doskonale służy swoim użytkownikom i zachwyca na lata.</p>
+        <div class="about-text">
+          <p>Northform Studio to studio projektowania wnętrz specjalizujące się w wizualizacjach i projektowaniu przestrzeni. Nasze podejście łączy estetykę z funkcjonalnością, tworząc wnętrza, które są zarówno piękne, jak i praktyczne.</p>
+          <p>Każdy projekt traktujemy indywidualnie, zwracając szczególną uwagę na detale, które tworzą całość. Wierzymy, że dobre wnętrze doskonale służy swoim użytkownikom i zachwyca na lata.</p>
+        </div>
       </div>
       <div class="about-image">
         <img src="assets/img/realizacje/06.jpg" alt="Wnętrze Northform Studio" width="600" height="520" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>Realizacja w przygotowaniu</div>'">
@@ -785,50 +743,44 @@
     </div>
   </section>
 
-  <!-- ── REALIZACJE ── -->
   <section id="realizacje">
-    <div class="section-label">02 — Realizacje</div>
-    <h2 class="section-title">Wybrane projekty</h2>
+    <h2 class="sec-title">Realizacje</h2>
     <div class="gallery">
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/01.jpg" alt="Realizacja 1" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/02.jpg" alt="Realizacja 2" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/03.jpg" alt="Realizacja 3" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/04.jpg" alt="Realizacja 4" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/05.jpg" alt="Realizacja 5" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/06.jpg" alt="Realizacja 6" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/07.jpg" alt="Realizacja 7" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/08.jpg" alt="Realizacja 8" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
-      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/09.jpg" alt="Realizacja 9" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/01.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/02.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/03.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/04.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/05.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/06.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/07.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/08.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
+      <div class="gallery-item"><div class="gallery-item-overlay"></div><img src="assets/img/realizacje/09.jpg" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder>·</div>'"></div>
     </div>
   </section>
 
-  <!-- ── OPINIE ── -->
   <section id="opinie">
-    <div class="section-label">03 — Opinie</div>
-    <h2 class="section-title">Co mówią klienci</h2>
+    <h2 class="sec-title">Opinie</h2>
     <div class="testimonials">
-      <div class="testimonial" data-token="{{OPINIA_1_TRESC}}">
+      <div class="testimonial">
         <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">{{OPINIA_1_TRESC}}</p>
-        <div class="testimonial-author">{{OPINIA_1_AUTOR}}</div>
+        <p class="testimonial-text">Northform Studio całkowicie odmieniło naszą przestrzeń. Każdy detal był przemyślany, a efekt końcowy przeszedł nasze najśmielsze oczekiwania. Polecamy z całego serca.</p>
+        <div class="testimonial-author">Anna K. — Warszawa</div>
       </div>
-      <div class="testimonial" data-token="{{OPINIA_2_TRESC}}">
+      <div class="testimonial">
         <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">{{OPINIA_2_TRESC}}</p>
-        <div class="testimonial-author">{{OPINIA_2_AUTOR}}</div>
+        <p class="testimonial-text">Profesjonalne podejście, terminowość i wyjątkowe wyczucie estetyki. Współpraca z Northform Studio to czysta przyjemność — od pierwszego szkicu po finalną realizację.</p>
+        <div class="testimonial-author">Marek W. — Kraków</div>
       </div>
-      <div class="testimonial" data-token="{{OPINIA_3_TRESC}}">
+      <div class="testimonial">
         <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">{{OPINIA_3_TRESC}}</p>
-        <div class="testimonial-author">{{OPINIA_3_AUTOR}}</div>
+        <p class="testimonial-text">Wizualizacje, które otrzymaliśmy, były niesamowicie dokładne. Projekt wnętrza idealnie odzwierciedlił nasze potrzeby i stworzył przestrzeń, w której naprawdę chce się przebywać.</p>
+        <div class="testimonial-author">Karolina i Piotr M. — Gdańsk</div>
       </div>
     </div>
   </section>
 
-  <!-- ── USŁUGI ── -->
   <section id="uslugi">
-    <div class="section-label">04 — Usługi</div>
-    <h2 class="section-title">Co oferujemy</h2>
+    <h2 class="sec-title">Usługi</h2>
     <div class="services">
       <div class="service-item">
         <div class="service-number">01</div>
@@ -857,15 +809,31 @@
     </div>
   </section>
 
-  <!-- ── KONTAKT ── -->
   <section id="kontakt">
-    <div class="section-label">05 — Kontakt</div>
-    <h2 class="section-title">Porozmawiajmy<br>o Twoim wnętrzu</h2>
-    <a href="mailto:kontakt.northformstudio@gmail.com" class="contact-email">kontakt.northformstudio@gmail.com</a>
-    <div class="contact-links">
-      <a href="https://instagram.com/northformstudio_" target="_blank">Instagram</a>
-      <span data-token="{{TELEFON}}">{{TELEFON}}</span>
-      <span data-token="{{LOKALIZACJA}}">{{LOKALIZACJA}}</span>
+    <h2 class="sec-title">Kontakt</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-info-label">E-mail</div>
+        <div class="contact-info-value"><a href="mailto:kontakt.northformstudio@gmail.com">kontakt.northformstudio@gmail.com</a></div>
+        <div class="contact-info-label">Instagram</div>
+        <div class="contact-info-value"><a href="https://instagram.com/northformstudio_" target="_blank">@northformstudio_</a></div>
+      </div>
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-group">
+          <label for="name">Imię i nazwisko</label>
+          <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="jan@email.pl" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Wiadomość</label>
+          <textarea id="message" name="message" placeholder="Opowiedz o swoim projekcie..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Wyślij wiadomość →</button>
+        <div class="form-success" id="form-success">Wiadomość wysłana. Odpiszemy wkrótce.</div>
+      </form>
     </div>
   </section>
 
@@ -873,7 +841,6 @@
     <p>Northform Studio — Interior Designer &copy; 2026</p>
   </footer>
 
-  <!-- ── LIGHTBOX ── -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
       <button class="lightbox-close" aria-label="Zamknij">&times;</button>
@@ -905,7 +872,6 @@
     gsap.ticker.add(time => lenis.raf(time * 1000))
     gsap.ticker.lagSmoothing(0)
 
-    // Header scroll state
     const header = document.getElementById('site-header')
     ScrollTrigger.create({
       start: 'top -60px',
@@ -913,18 +879,15 @@
       onLeaveBack: () => header.classList.remove('scrolled'),
     })
 
-    // Hero image load
     const heroBg = document.querySelector('.hero-bg')
     const heroReveal = () => {
       heroBg.classList.add('loaded')
       gsap.to(heroBg, { opacity: 1, duration: 1.4, ease: 'power2.out' })
       gsap.to('.hero-wordmark', { opacity: 1, y: 0, duration: 1.1, delay: 0.5, ease: 'power3.out' })
-      gsap.to('.hero-scroll', { opacity: 1, duration: 0.8, delay: 1.4 })
     }
     if (heroBg.complete) heroReveal()
     else heroBg.addEventListener('load', heroReveal)
 
-    // Scroll reveals
     const reveal = (targets, stagger = 0.12) => {
       gsap.utils.toArray(targets).forEach((el, i) => {
         gsap.to(el, {
@@ -938,56 +901,38 @@
       })
     }
 
-    reveal('.section-label')
-    reveal('.section-title')
-    reveal('.about-text')
+    reveal('.sec-title')
+    reveal('.about-text p')
     reveal('.about-image')
     reveal('.testimonial')
     reveal('.service-item')
-    reveal('.contact-email')
-    reveal('.contact-links')
+    reveal('.contact-grid')
 
-    // Dropdowns
-    const dropdowns = document.querySelectorAll('.dropdown')
-    dropdowns.forEach(dd => {
-      const btn = dd.querySelector('.dropdown-btn')
-      const menu = dd.querySelector('.dropdown-menu')
-      btn.addEventListener('click', e => {
-        e.stopPropagation()
-        const isOpen = btn.getAttribute('aria-expanded') === 'true'
-        dropdowns.forEach(d => {
-          d.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
-          d.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
-        })
-        if (!isOpen) {
-          btn.setAttribute('aria-expanded', 'true')
-          menu.setAttribute('aria-hidden', 'false')
-        }
-      })
-      menu.querySelectorAll('a, button').forEach(item => {
-        item.addEventListener('click', () => {
-          btn.setAttribute('aria-expanded', 'false')
-          menu.setAttribute('aria-hidden', 'true')
-        })
+    const hamburger = document.querySelector('.hamburger')
+    const mobileMenu = document.getElementById('mobile-menu')
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.contains('open')
+      hamburger.classList.toggle('open')
+      hamburger.setAttribute('aria-expanded', String(!isOpen))
+      if (!isOpen) {
+        mobileMenu.classList.add('open')
+        lenis.stop()
+      } else {
+        mobileMenu.classList.remove('open')
+        lenis.start()
+      }
+    })
+
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open')
+        hamburger.setAttribute('aria-expanded', 'false')
+        mobileMenu.classList.remove('open')
+        lenis.start()
       })
     })
 
-    document.addEventListener('click', () => {
-      dropdowns.forEach(dd => {
-        dd.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
-        dd.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
-      })
-    })
-
-    document.addEventListener('keydown', e => {
-      if (e.key !== 'Escape') return
-      dropdowns.forEach(dd => {
-        dd.querySelector('.dropdown-btn').setAttribute('aria-expanded', 'false')
-        dd.querySelector('.dropdown-menu').setAttribute('aria-hidden', 'true')
-      })
-    })
-
-    // Lightbox
     const lightbox = document.getElementById('lightbox')
     const lightboxImg = lightbox.querySelector('.lightbox-img')
     const galleryItems = document.querySelectorAll('.gallery-item img')
@@ -1021,26 +966,20 @@
       if (e.key === 'Escape') lightbox.classList.remove('active')
     })
 
-    // Hide unfilled tokens
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-token]').forEach(el => {
-        const t = el.textContent || ''
-        if (t.includes('{{') && t.includes('}}')) {
-          el.classList.add('hidden')
-          if (el.closest('.testimonial')) el.closest('.testimonial').classList.add('hidden')
-        }
-      })
-      const opinie = document.getElementById('opinie')
-      if (opinie && !opinie.querySelector('.testimonial:not(.hidden)')) opinie.classList.add('hidden')
-    })
-
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault()
         const target = document.querySelector(a.getAttribute('href'))
         if (target) lenis.scrollTo(target)
       })
+    })
+
+    document.getElementById('contact-form').addEventListener('submit', e => {
+      e.preventDefault()
+      const form = e.target
+      const success = document.getElementById('form-success')
+      success.style.display = 'block'
+      form.querySelectorAll('input, textarea, button').forEach(el => { el.disabled = true })
     })
   </script>
 </body>
