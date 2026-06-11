@@ -1084,8 +1084,8 @@
     let currentIndex = 0
 
     const showLightbox = index => {
-      currentIndex = index
-      lightboxImg.src = galleryItems[index].src
+      currentIndex = (index + galleryItems.length) % galleryItems.length
+      lightboxImg.src = galleryItems[currentIndex].src
       lightbox.classList.add('active')
     }
 
@@ -1096,18 +1096,18 @@
 
     lightbox.querySelector('.next').addEventListener('click', e => {
       e.stopPropagation()
-      showLightbox((currentIndex + 1) % galleryItems.length)
+      showLightbox(currentIndex + 1)
     })
 
     lightbox.querySelector('.prev').addEventListener('click', e => {
       e.stopPropagation()
-      showLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length)
+      showLightbox(currentIndex - 1)
     })
 
     document.addEventListener('keydown', e => {
       if (!lightbox.classList.contains('active')) return
-      if (e.key === 'ArrowRight') showLightbox((currentIndex + 1) % galleryItems.length)
-      if (e.key === 'ArrowLeft') showLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length)
+      if (e.key === 'ArrowRight') showLightbox(currentIndex + 1)
+      if (e.key === 'ArrowLeft') showLightbox(currentIndex - 1)
       if (e.key === 'Escape') lightbox.classList.remove('active')
     })
 
